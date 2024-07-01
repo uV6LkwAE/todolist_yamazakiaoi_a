@@ -1,0 +1,10 @@
+
+{% extends 'base.html' %}
+{% block content %}
+    {{ object.title }}<br>
+    {{ object.text }}<br>
+    {{ object.date }}<br>
+    {{ object.status }}<br>
+    <a href="{% url 'todo-update' object.pk %}">編集する</a>
+    <a href="{% url 'todo-delete' object.pk %}">削除する</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+forms.py作成
+ログアウト時はindexview
+詳細画面に編集、削除ボタン
+
+カウントダウン js
+作成した本人のみ表示、編集、削除
+Googleフォント導入
+レスポンシブ
+
+削除確認画面でユーザー名を＋削除すると表示される
+
+createdby 要らない、削除
+
+検索
+
+未完了todo上,日付順ソート
+完了済みtodo下
+
+完了、未完了振り分け
+
+編集 日付 入力 カレンダー
+
+git
+
+削除確認画面作成
+パスワードを忘れた場合
+
+<form method="post" action="{% url 'todo-delete' object.pk %}">
+    {% csrf_token %}
+    <button type="submit">{{ object.title }}を削除する</button>
+</form>
+
+{% endblock content %}

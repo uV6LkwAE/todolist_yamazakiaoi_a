@@ -1,0 +1,45 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .flex-container {
+            display: flex;
+        }
+        .flex-item {
+            margin-right: 10px; /* 要素間のスペース */
+        }
+        .a {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="a">
+        <div class="flex-container">
+            {% if request.user.is_authenticated %}
+                <form method="POST" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">ログアウト</button>
+                </form>
+                <p>ようこそ、{{ request.user.username }}さん</p>
+                <a href="{% url 'todo-list' %}" class="flex-item">todo一覧</a>
+                <a href="{% url 'todo-create' %}" class="flex-item">todo追加</a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}">ログイン</a>
+                <a href="{% url 'accounts:signup' %}">サインアップ</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="body">
+        <h1>{% block h1 %}{% endblock %}</h1>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
