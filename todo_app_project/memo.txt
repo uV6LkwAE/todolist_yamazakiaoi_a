@@ -31,3 +31,5 @@ git
 </form>
 
 {% endblock content %}
+
+statusを日本語に

@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +12,7 @@
         .flex-item {
             margin-right: 10px; /* 要素間のスペース */
         }
-        .a {
-            background-color: red;
-        }
+
     </style>
 </head>
 <body>
@@ -30,6 +26,7 @@
                 <p>ようこそ、{{ request.user.username }}さん</p>
                 <a href="{% url 'todo-list' %}" class="flex-item">todo一覧</a>
                 <a href="{% url 'todo-create' %}" class="flex-item">todo追加</a>
+                <a href="{% url 'todo-search' %}" class="flex-item">todo検索</a>
             {% else %}
                 <a href="{% url 'accounts:login' %}">ログイン</a>
                 <a href="{% url 'accounts:signup' %}">サインアップ</a>

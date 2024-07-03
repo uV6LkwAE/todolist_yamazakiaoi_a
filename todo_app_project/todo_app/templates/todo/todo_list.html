@@ -4,6 +4,17 @@
 
 {% block content %}
     <h2>ToDoリスト</h2>
+
+    <form method="get" action="{% url 'todo-list' %}">
+        <label for="status">ステータス:</label>
+        <select name="status" id="status">
+            <option value="">すべて</option>
+            <option value="finished" {% if status == 'finished' %}selected{% endif %}>完了済み</option>
+            <option value="unfinished" {% if status == 'unfinished' %}selected{% endif %}>未完了</option>
+        </select>
+        <button type="submit">フィルタ</button>
+    </form>
+    
     <ul>
         {% for todo in todos %}
             <li>

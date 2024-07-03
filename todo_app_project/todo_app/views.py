@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.views.generic import ListView,DetailView,CreateView,DeleteView,UpdateView
 # Create your views here.
 from .models import Post
@@ -13,13 +14,38 @@ class ListTodoView(LoginRequiredMixin, ListView):
     context_object_name = 'todos'  # テンプレート内で使用するオブジェクトの名前を指定
 
     def get_queryset(self):
-        # ログイン中のユーザーが作成したToDoのみをフィルタリングし、日付順にソート
-        return Post.objects.filter(user=self.request.user).order_by('date')
+        status = self.request.GET.get('status')
+
+        if status == 'finished':
+            todos = Post.objects.filter(user=self.request.user, status='finished').order_by('date')
+        elif status == 'unfinished':
+            todos = Post.objects.filter(user=self.request.user, status='unfinished').order_by('date')
+        else:
+            todos = Post.objects.filter(user=self.request.user).order_by('date')
+
+        return todos
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for todo in context['todos']:
-            print(f"List view todo: {todo.pk}, {todo.title}")  # デバッグメッセージ
+        context['status'] = self.request.GET.get('status', '')
+        return context
+
+class SearchTodoView(ListView):
+    model = Post
+    template_name = 'todo/todo_search.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) | Q(text__icontains=query)
+            )
+        return Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
         return context
 
 
