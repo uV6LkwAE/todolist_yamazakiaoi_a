@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .flex-container {
             display: flex;
@@ -12,31 +14,60 @@
         .flex-item {
             margin-right: 10px; /* 要素間のスペース */
         }
-
     </style>
 </head>
 <body>
-    <div class="a">
-        <div class="flex-container">
-            {% if request.user.is_authenticated %}
-                <form method="POST" action="{% url 'accounts:logout' %}">
-                    {% csrf_token %}
-                    <button type="submit">ログアウト</button>
-                </form>
-                <p>ようこそ、{{ request.user.username }}さん</p>
-                <a href="{% url 'todo-list' %}" class="flex-item">todo一覧</a>
-                <a href="{% url 'todo-create' %}" class="flex-item">todo追加</a>
-                <a href="{% url 'todo-search' %}" class="flex-item">todo検索</a>
-            {% else %}
-                <a href="{% url 'accounts:login' %}">ログイン</a>
-                <a href="{% url 'accounts:signup' %}">サインアップ</a>
-            {% endif %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">ToDoアプリ</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'todo-list' %}">ToDo一覧</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'todo-create' %}">ToDo追加</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'todo-search' %}">ToDo検索</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:login' %}">ログイン</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accounts:signup' %}">サインアップ</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% if request.user.is_authenticated %}
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'accounts:logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">ログアウト</button>
+                    </form>
+                    <p class="ml-3 my-0">ようこそ、{{ request.user.username }}さん</p>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>{% block h1 %}{% endblock %}</h1>
+        <div class="row">
+            <div class="col">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </div>
 
-    <div class="body">
-        <h1>{% block h1 %}{% endblock %}</h1>
-        {% block content %}{% endblock %}
-    </div>
+    <!-- Bootstrap JS and jQuery (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
