@@ -71,6 +71,6 @@ class DeleteTodoView(LoginRequiredMixin, DeleteView):
 
 class UpdateTodoView(LoginRequiredMixin,UpdateView):
     template_name = 'todo/todo_update.html'
+    form_class = PostForm
     model = Post
-    fields = ('title','text','date','status')
     success_url = reverse_lazy('todo-list')
