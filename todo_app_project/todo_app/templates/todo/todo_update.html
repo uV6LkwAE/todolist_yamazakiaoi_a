@@ -1,10 +1,13 @@
 
 {% extends 'base.html' %}
-{% block title %}todo修正{% endblock %}
+
+{% block title %}Todo修正{% endblock %}
 
 {% block content %}
-    <form method="post">{% csrf_token %}
+<div class="container">
+    <form method="post" class="mt-4">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">修正する</button>
+        <button type="submit" class="btn btn-primary">修正する</button>
     </form>
-{% endblock %}
+</div>
+{% endblock content %}

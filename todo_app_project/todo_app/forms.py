@@ -20,7 +20,3 @@ class PostForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'status': forms.Select(attrs={'class': 'form-control'})
         }
-
-        widgets = {
-            'todostatus': forms.Select(attrs={'class': 'form-control'})
-        }

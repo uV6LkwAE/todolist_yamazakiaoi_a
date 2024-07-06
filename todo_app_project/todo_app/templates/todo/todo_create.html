@@ -4,8 +4,10 @@
 {% block title %}Todo新規作成{% endblock %}
 
 {% block content %}
-    <form method="post">{% csrf_token %}
+<div class="container">
+    <form method="post" class="mt-4">{% csrf_token %}
         {{form.as_p}}
-        <input type="submit" value="新規作成する">
+        <button type="submit" class="btn btn-primary mt-3">Todoを追加する</button>
     </form>
+</div>
 {% endblock content %}

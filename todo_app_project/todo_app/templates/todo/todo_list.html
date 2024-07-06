@@ -3,29 +3,33 @@
 {% load custom_filters %}
 
 {% block content %}
-    <h2>ToDoリスト</h2>
+<div class="container">
+    <h2 class="mt-4 mb-3">ToDoリスト</h2>
 
-    <form method="get" action="{% url 'todo-list' %}">
-        <label for="status">ステータス:</label>
-        <select name="status" id="status">
-            <option value="">すべて</option>
-            <option value="finished" {% if status == 'finished' %}selected{% endif %}>完了済み</option>
-            <option value="unfinished" {% if status == 'unfinished' %}selected{% endif %}>未完了</option>
-        </select>
-        <button type="submit">フィルタ</button>
+    <form method="get" action="{% url 'todo-list' %}" class="mb-4">
+        <div class="form-group">
+            <label for="status">ステータス:</label>
+            <select name="status" id="status" class="form-control">
+                <option value="">すべて</option>
+                <option value="finished" {% if status == 'finished' %}selected{% endif %}>完了済み</option>
+                <option value="unfinished" {% if status == 'unfinished' %}selected{% endif %}>未完了</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">フィルタ</button>
     </form>
     
-    <ul>
+    <ul class="list-group">
         {% for todo in todos %}
-            <li>
-                <h2>{{ todo.title }}</h2>
-                <h6>Status: {{ todo.status }}</h6>
-                <p>期限まで: {{ todo.date|days_until }}</p>
-                <a href="{% url 'todo-detail' todo.pk %}">詳細を見る</a>
-                <a href="{% url 'todo-delete' todo.pk %}">削除する</a>
+            <li class="list-group-item">
+                <h4>{{ todo.title }}</h4>
+                <p class="mb-1">Status: {{ todo.status }}</p>
+                <p class="mb-1">期限まで: {{ todo.date|days_until }}</p>
+                <a href="{% url 'todo-detail' todo.pk %}" class="btn btn-info btn-sm">詳細を見る</a>
+                <a href="{% url 'todo-delete' todo.pk %}" class="btn btn-danger btn-sm">削除する</a>
             </li>
         {% empty %}
-            <li>ToDoはありません。</li>
+            <li class="list-group-item">ToDoはありません。</li>
         {% endfor %}
     </ul>
-{% endblock %}
+</div>
+{% endblock content %}

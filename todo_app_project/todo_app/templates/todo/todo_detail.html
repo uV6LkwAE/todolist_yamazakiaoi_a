@@ -1,10 +1,16 @@
 
+
 {% extends 'base.html' %}
+
+{% block title %}Todo詳細{% endblock %}
+
 {% block content %}
-    {{ object.title }}<br>
-    {{ object.text }}<br>
-    {{ object.date }}<br>
-    {{ object.status }}<br>
-    <a href="{% url 'todo-update' object.pk %}">編集する</a>
-    <a href="{% url 'todo-delete' object.pk %}">削除する</a>
-{% endblock %}
+<div class="container">
+    <h2>{{ object.title }}</h2>
+    <p>{{ object.text }}</p>
+    <p>{{ object.date }}</p>
+    <p>{{ object.status }}</p>
+    <a href="{% url 'todo-update' object.pk %}" class="btn btn-primary">編集する</a>
+    <a href="{% url 'todo-delete' object.pk %}" class="btn btn-danger">削除する</a>
+</div>
+{% endblock content %}

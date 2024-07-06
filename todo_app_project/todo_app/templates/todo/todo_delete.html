@@ -4,10 +4,10 @@
 {% block title %}Todo削除{% endblock %}
 
 {% block content %}
-
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">{{ object.title }}を削除する</button>
-</form>
-
+<div class="container">
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{{ object.title }}を削除する</button>
+    </form>
+</div>
 {% endblock content %}

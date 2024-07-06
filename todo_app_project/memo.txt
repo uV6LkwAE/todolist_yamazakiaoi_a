@@ -33,3 +33,5 @@ git
 {% endblock content %}
 
 statusを日本語に
+
+レスポンシブ
