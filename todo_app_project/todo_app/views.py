@@ -30,6 +30,24 @@ class ListTodoView(LoginRequiredMixin, ListView):
         context['status'] = self.request.GET.get('status', '')
         return context
 
+# class SearchTodoView(ListView):
+#     model = Post
+#     template_name = 'todo/todo_search.html'
+#     context_object_name = 'posts'
+
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         if query:
+#             return Post.objects.filter(
+#                 Q(title__icontains=query) | Q(text__icontains=query)
+#             )
+#         return Post.objects.all()
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['query'] = self.request.GET.get('q', '')
+#         return context
+
 class SearchTodoView(ListView):
     model = Post
     template_name = 'todo/todo_search.html'
@@ -37,11 +55,15 @@ class SearchTodoView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
+        # ログイン中のユーザーを取得
+        user = self.request.user
         if query:
+            # ログイン中のユーザーに関連する投稿のみフィルタ
             return Post.objects.filter(
-                Q(title__icontains=query) | Q(text__icontains=query)
+                (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user=user)
             )
-        return Post.objects.all()
+        # ログイン中のユーザーの投稿のみ取得
+        return Post.objects.filter(user=user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -71,6 +93,6 @@ class DeleteTodoView(LoginRequiredMixin, DeleteView):
 
 class UpdateTodoView(LoginRequiredMixin,UpdateView):
     template_name = 'todo/todo_update.html'
+    form_class = PostForm
     model = Post
-    fields = ('title','text','date','status')
     success_url = reverse_lazy('todo-list')

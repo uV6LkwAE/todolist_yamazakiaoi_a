@@ -1,23 +1,30 @@
 
 {% extends 'base.html' %}
-{% block title %}todo検索{% endblock %}
+
+{% block title %}Todo検索{% endblock %}
 
 {% block content %}
-    <form method="get" action="{% url 'todo-search' %}">
-        <input type="text" name="q" placeholder="検索..." value="{{ query }}">
-        <button type="submit">検索</button>
+<div class="container">
+    <form method="get" action="{% url 'todo-search' %}" class="mt-4">
+        <div class="input-group mb-3">
+            <input type="text" name="q" class="form-control" placeholder="検索..." value="{{ query }}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-secondary">検索</button>
+            </div>
+        </div>
     </form>
 
-    <ul>
+    <ul class="list-group">
         {% for post in posts %}
-            <li>
+            <li class="list-group-item">
                 <a href="{% url 'todo-detail' post.pk %}">{{ post.title }}</a>
                 <p>{{ post.text }}</p>
                 <p>{{ post.date }}</p>
                 <p>{{ post.get_status_display }}</p>
             </li>
+        {% empty %}
+            <li class="list-group-item">ToDoはありません。</li>
         {% endfor %}
     </ul>
-{% endblock %}
-
-
+</div>
+{% endblock content %}
